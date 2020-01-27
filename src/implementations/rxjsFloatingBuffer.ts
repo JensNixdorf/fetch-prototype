@@ -8,7 +8,7 @@ const MAX_CONCURRENT_REQUESTS = 10;
 class FlowControl {
 
   private totalCount = 0;
-  private totalItems:number;
+  private totalItems: number;
   private observer: Observer<string> | undefined;
 
   constructor( 
@@ -17,7 +17,7 @@ class FlowControl {
     this.totalItems = urls.length;
   }
 
-  initFlow( observer: Observer<string>){
+  initFlow( observer: Observer<string>): void{
     this.observer = observer;
     const initRun = (this.totalItems > MAX_CONCURRENT_REQUESTS) ? 
       MAX_CONCURRENT_REQUESTS : this.totalItems;

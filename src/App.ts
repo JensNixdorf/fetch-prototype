@@ -4,18 +4,18 @@ import fetchRxjs from "./implementations/rxjssimple";
 import fetchRxjsBufferd from "./implementations/rxjsBuffered";
 import fetchRxjsFloatingBuffer from "./implementations/rxjsFloatingBuffer";
 
-const printTimePassed = (startTime: number) => {
+const printTimePassed = (startTime: number): void => {
     const passed = (Date.now() - startTime) / 1000;
     console.log(`Time passed: ${passed.toFixed(2)}s`);
 }
 
 const MAX_ITEMS = 29;
 
-const run = async () => {
+const run = async (): Promise<void> => {
     // Get 10 URLs to fetch data...
-    const fetchUrls:string[] = (
-        () => {
-            let urls:string[] = [];
+    const fetchUrls: string[] = (
+        (): string[] => {
+            let urls: string[] = [];
             for(let i=1; i<= MAX_ITEMS; i++){
                 urls = [...urls, `https://jsonplaceholder.typicode.com/todos/${i}`]
             }
