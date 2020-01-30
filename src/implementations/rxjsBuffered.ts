@@ -5,7 +5,6 @@ import { Item } from "../Item";
 
 const createFetchObservable = (urls: string[]): Observable<Item[]> => {
   return defer( async (): Promise<Item[]> => {
-
     let promises: Promise<Item>[] = [];
 
     urls.forEach(url => {
@@ -20,10 +19,8 @@ const createFetchObservable = (urls: string[]): Observable<Item[]> => {
       });
       promises = [...promises, promise];
     });
-    const items = await Promise.all( promises );
-    return items;
+    return await Promise.all( promises );
   });
-
 }
 
 const MAX_CONCURRENT_REQUESTS = 10;
