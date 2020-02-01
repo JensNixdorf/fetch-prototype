@@ -1,7 +1,7 @@
 import fetchSequential from "./implementations/sequel";
 import fetchParallelwPromises from "./implementations/parallelpromises";
 import fetchRxjs from "./implementations/rxjssimple";
-import fetchRxjsBufferd from "./implementations/rxjsBuffered";
+import fetchRxjsLimited from "./implementations/rxjsLimited";
 import fetchRxjsFloatingBuffer from "./implementations/rxjsFloatingBuffer";
 
 const printTimePassed = (startTime: number): void => {
@@ -33,14 +33,14 @@ const run = async (): Promise<void> => {
     await fetchParallelwPromises(fetchUrls);
     printTimePassed(pwPStart);
 
-    console.log("\nRunning unbuffered parallel fetch with RxJS...");
+    console.log("\nRunning unlimted parallel fetch with RxJS...");
     const rxjsStart = Date.now();
     await fetchRxjs(fetchUrls);
     printTimePassed(rxjsStart);
 
-    console.log("\nRunning parallel fetch buffered with RxJS...");
+    console.log("\nRunning parallel fetch limited with RxJS...");
     const rxjsBufStart = Date.now();
-    await fetchRxjsBufferd(fetchUrls);
+    await fetchRxjsLimited(fetchUrls);
     printTimePassed(rxjsBufStart);
     
     console.log("\nRunning fetch with controlled flow and RxJS...");

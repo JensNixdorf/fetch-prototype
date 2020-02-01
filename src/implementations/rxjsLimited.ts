@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
-import { from, Observable, defer, forkJoin } from "rxjs";
-import { toArray, bufferCount, catchError, flatMap, map, tap } from "rxjs/operators";
+import { defer, from, Observable } from "rxjs";
+import { catchError, flatMap, toArray } from "rxjs/operators";
 import { Item } from "../Item";
 
 const fetchItem = (url: string): Observable<Item> => {
@@ -24,7 +24,7 @@ const fetchItem = (url: string): Observable<Item> => {
 
 const MAX_CONCURRENT_REQUESTS = 10;
 
-const fetchRxjsBufferd = async (fetchUrls: string[]): Promise<Item[]> => {
+const fetchRxjsLimited = async (fetchUrls: string[]): Promise<Item[]> => {
   const items = await from( fetchUrls).pipe(
     flatMap(url => fetchItem(url), undefined, MAX_CONCURRENT_REQUESTS),
     toArray(),
@@ -37,4 +37,4 @@ const fetchRxjsBufferd = async (fetchUrls: string[]): Promise<Item[]> => {
   return items;
 }
 
-export default fetchRxjsBufferd;
+export default fetchRxjsLimited;
