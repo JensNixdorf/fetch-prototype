@@ -48,5 +48,45 @@ const run = async (): Promise<void> => {
     await fetchRxjsFloatingBuffer(fetchUrls);
     printTimePassed(rxjsFloatBufStart);
 }
-console.log('Starting fetching...')
-run();
+// console.log('Starting fetching...')
+// run();
+
+const checkDate = (toBeChecked: any): boolean => {
+    try{
+        const d = toBeChecked as Date;
+        d.getTime();
+        d.toDateString();
+        d.toUTCString();
+        return true;
+    }
+    catch{
+        return false;
+    }
+}
+
+const propType = <T, K extends keyof T>(obj: T, key: K): string => {
+    const simpleTypes: Set<string> = new Set( ['number', 'string', 'boolean', 'bigint']);
+    
+    const typeName = String(typeof obj[key]);
+    if (simpleTypes.has(typeName))
+        return typeName;
+    const isDate = checkDate(obj[key]);
+    if (isDate){
+        return 'Date';
+    }
+    throw new Error("Can't identify type (no standard type)");
+}
+
+class Finding {
+    constructor(
+        readonly id: number,
+        readonly description: string,
+        readonly startDate: Date,
+    ){}
+}
+
+// H O W   T O   U S E
+const finding = new Finding( 799, 'Description', new Date());
+console.log(propType(finding, 'id'));
+console.log(propType(finding, 'description'));
+console.log(propType(finding, 'startDate'));
